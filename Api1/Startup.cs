@@ -30,8 +30,7 @@ namespace Api1
         options.AddPolicy("BadgeEntry", policy =>
             policy.RequireAssertion(context =>
                 context.User.HasClaim(c =>
-                    (c.Type == "helloworld" ) &&
-                     c.Issuer == "http://localhost:5000" &&
+                    (c.Type == "helloworld" ) &&                     
                      c.Value == "hey hoo")));
     })
     .AddJsonFormatters();
@@ -41,8 +40,10 @@ namespace Api1
                 {
                     options.Authority = "http://localhost:5000";
                     options.RequireHttpsMetadata = false;
+                    options.ApiSecret = "secret";
 
                     options.ApiName = "api1";
+                    options.SupportedTokens = IdentityServer4.AccessTokenValidation.SupportedTokens.Both;
                 });
 
             services.AddCors(options =>
